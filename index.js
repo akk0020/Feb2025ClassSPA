@@ -55,6 +55,7 @@ router.hooks({
           .get(`${process.env.PIZZA_PLACE_API_URL}/pizzas`)
           .then((response) => {
             // Storing retrieved data in state
+            // console log to check for data
             // The dot chain variable access represents the following {storeFolder.stateFileViewName.objectAttribute}
             store.pizza.pizzas = response.data;
             console.log("store.pizza.pizzas", store.pizza.pizzas);
