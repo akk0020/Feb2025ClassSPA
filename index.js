@@ -32,7 +32,7 @@ router.hooks({
           .get(
             `https://api.openweathermap.org/data/2.5/weather?appid=${process.env.OPEN_WEATHER_MAP_API_KEY}&units=imperial&q=st%20louis`
           )
-          .then((response) => {
+          .then(response => {
             console.log("response.data", response.data);
             // Create an object to be stored in the Home state from the response
             store.home.weather = {
@@ -43,7 +43,7 @@ router.hooks({
             };
             done();
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
             done();
           });
@@ -53,7 +53,7 @@ router.hooks({
         // New Axios get request utilizing already made environment variable
         axios
           .get(`${process.env.PIZZA_PLACE_API_URL}/pizzas`)
-          .then((response) => {
+          .then(response => {
             // Storing retrieved data in state
             // console log to check for data
             // The dot chain variable access represents the following {storeFolder.stateFileViewName.objectAttribute}
@@ -61,7 +61,7 @@ router.hooks({
             console.log("store.pizza.pizzas", store.pizza.pizzas);
             done();
           })
-          .catch((error) => {
+          .catch(error => {
             console.log("It puked", error);
             done();
           });
@@ -72,19 +72,19 @@ router.hooks({
       // break is not needed since it is the last condition, if you move default higher in the stack then you should add the break statement.
     }
   },
-  already: (match) => {
+  already: match => {
     const view = match?.data?.view ? camelCase(match.data.view) : "home";
     x;
 
     render(store[view]);
   },
-  after: (match) => {
+  after: match => {
     const view = match?.data?.view ? camelCase(match.data.view) : "home";
     router.updatePageLinks();
 
     if (view === "order") {
       // Add an event handler for the submit button on the form
-      document.querySelector("form").addEventListener("submit", (event) => {
+      document.querySelector("form").addEventListener("submit", event => {
         event.preventDefault();
 
         // Get the form element
@@ -117,13 +117,13 @@ router.hooks({
         axios
           // Make a POST request to the API to create a new pizza
           .post(`${process.env.PIZZA_PLACE_API_URL}/pizzas`, requestData)
-          .then((response) => {
+          .then(response => {
             //  Then push the new pizza onto the Pizza state pizzas attribute, so it can be displayed in the pizza list
             store.pizza.pizzas.push(response.data);
             router.navigate("/pizza");
           })
           // If there is an error log it to the console
-          .catch((error) => {
+          .catch(error => {
             console.log("It puked", error);
           });
       });
